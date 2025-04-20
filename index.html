@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoRide - Bike Rental & Sales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .language-switch {
+            transition: all 0.3s ease;
+        }
+        
+        .language-switch:hover {
+            transform: scale(1.1);
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Language Switch -->
+    <div class="fixed top-4 right-4 z-50 flex space-x-2">
+        <button id="englishBtn" class="language-switch bg-blue-500 text-white px-3 py-1 rounded-full shadow-md">EN</button>
+        <button id="arabicBtn" class="language-switch bg-green-500 text-white px-3 py-1 rounded-full shadow-md">AR</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="flex items-center space-x-2">
+                        <i class="fas fa-bicycle text-3xl text-green-500"></i>
+                        <span class="text-xl font-bold text-gray-800">EcoRide</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-500">Home</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-500">Rentals</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-500">Sales</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-500">Locations</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-500">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full btn-hover">
+                        <i class="fas fa-user mr-2"></i>
+                        <span>Sign In</span>
+                    </a>
+                    <button class="md:hidden focus:outline-none">
+                        <i class="fas fa-bars text-2xl text-gray-700"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0 fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Ride Green, Ride Smart</h1>
+                <p class="text-xl mb-6">Explore the city with our eco-friendly bikes. Rent or buy with flexible options.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#rental" class="bg-white text-green-600 hover:bg-gray-100 px-6 py-3 rounded-full font-medium btn-hover">
+                        <i class="fas fa-bicycle mr-2"></i> Rent Now
+                    </a>
+                    <a href="#sales" class="bg-transparent border-2 border-white hover:bg-white hover:text-green-600 px-6 py-3 rounded-full font-medium btn-hover">
+                        <i class="fas fa-shopping-bag mr-2"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Premium Bikes" 
+                     class="rounded-lg shadow-2xl max-w-full h-auto max-h-96 object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Rental Section -->
+    <section id="rental" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Bike Rental Options</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Flexible rental plans for all your cycling needs</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Rental Option 1 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md bike-card transition-all duration-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Hourly Rental</h3>
+                            <p class="text-gray-600">Perfect for short trips</p>
+                        </div>
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-clock mr-1"></i> Flexible
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-3xl font-bold text-gray-800">$5</span>
+                        <span class="text-gray-600">/hour</span>
+                    </div>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>First hour minimum</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Free helmet included</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Multiple pickup locations</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full btn-hover">
+                        Book Now
+                    </button>
+                </div>
+                
+                <!-- Rental Option 2 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md bike-card transition-all duration-300 border-2 border-green-500 transform scale-105">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Daily Rental</h3>
+                            <p class="text-gray-600">Best value for full day</p>
+                        </div>
+                        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-star mr-1"></i> Popular
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-3xl font-bold text-gray-800">$25</span>
+                        <span class="text-gray-600">/day</span>
+                    </div>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Up to 12 hours</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Free accessories kit</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Priority customer support</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-full btn-hover">
+                        Book Now
+                    </button>
+                </div>
+                
+                <!-- Rental Option 3 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md bike-card transition-all duration-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Weekly Rental</h3>
+                            <p class="text-gray-600">For extended adventures</p>
+                        </div>
+                        <div class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-calendar-alt mr-1"></i> Long-term
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-3xl font-bold text-gray-800">$120</span>
+                        <span class="text-gray-600">/week</span>
+                    </div>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>7 days of unlimited rides</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Free maintenance check</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>10% discount on purchase</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full btn-hover">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Rental Process -->
+            <div class="mt-16 bg-green-50 rounded-xl p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">How It Works</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-md">
+                            <i class="fas fa-map-marker-alt text-green-500 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">1. Choose Location</h4>
+                        <p class="text-gray-600">Select from our network of pickup stations across the city</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-md">
+                            <i class="fas fa-bicycle text-green-500 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">2. Select Your Bike</h4>
+                        <p class="text-gray-600">Choose from our range of premium, eco-friendly bikes</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-md">
+                            <i class="fas fa-credit-card text-green-500 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">3. Ride & Return</h4>
+                        <p class="text-gray-600">Pay securely and return to any station when done</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Safety Warning -->
+            <div class="mt-12 bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-lg">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-lg font-bold text-yellow-800">Safety First!</h3>
+                        <div class="mt-2 text-yellow-700">
+                            <p>• Always wear a helmet (provided free with rental)</p>
+                            <p>• Follow all traffic laws and bike lane regulations</p>
+                            <p>• Inspect your bike before riding</p>
+                            <p>• Never ride under the influence of alcohol</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sales Section -->
+    <section id="sales" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Bikes For Sale</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Own your perfect ride with our premium selection</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Bike 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md bike-card transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="City Commuter" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-leaf mr-1"></i> Eco
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">City Commuter</h3>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Perfect for daily urban transportation with comfort and style.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-800">$399</span>
+                                <span class="text-gray-500 line-through ml-2">$499</span>
+                            </div>
+                            <div class="text-green-500 font-medium">
+                                <i class="fas fa-bolt mr-1"></i> 20% OFF
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">7-speed</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Aluminum</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Lightweight</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full btn-hover">
+                                <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                            </button>
+                            <button class="w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full flex items-center justify-center btn-hover">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bike 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md bike-card transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1022&q=80" 
+                             alt="Mountain Pro" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-fire mr-1"></i> Hot
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Mountain Pro</h3>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Tackle any terrain with this rugged, high-performance mountain bike.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-800">$799</span>
+                            </div>
+                            <div class="text-green-500 font-medium">
+                                <i class="fas fa-bolt mr-1"></i> Free Accessories
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">21-speed</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Carbon</span>
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Shock Absorb</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full btn-hover">
+                                <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                            </button>
+                            <button class="w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full flex items-center justify-center btn-hover">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bike 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md bike-card transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Electric Cruiser" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-bolt mr-1"></i> Electric
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Electric Cruiser</h3>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.7</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Effortless riding with our premium electric-assist technology.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-2xl font-bold text-gray-800">$1,299</span>
+                                <span class="text-gray-500 line-through ml-2">$1,499</span>
+                            </div>
+                            <div class="text-green-500 font-medium">
+                                <i class="fas fa-bolt mr-1"></i> 15% OFF
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">E-Bike</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">50mi Range</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Fast Charge</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full btn-hover">
+                                <i class="fas fa-shopping-cart mr-2"></i> Buy Now
+                            </button>
+                            <button class="w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full flex items-center justify-center btn-hover">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="mt-16 bg-white rounded-xl p-8 shadow-sm">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Payment Options</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="flex flex-col items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-credit-card text-4xl text-blue-500 mb-3"></i>
+                        <h4 class="font-bold">Credit Card</h4>
+                        <p class="text-sm text-gray-600 text-center">Visa, Mastercard, Amex</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fab fa-cc-apple-pay text-4xl text-black mb-3"></i>
+                        <h4 class="font-bold">Apple Pay</h4>
+                        <p class="text-sm text-gray-600 text-center">Secure mobile payments</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-money-bill-wave text-4xl text-green-500 mb-3"></i>
+                        <h4 class="font-bold">Cash</h4>
+                        <p class="text-sm text-gray-600 text-center">At our physical locations</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fab fa-cc-paypal text-4xl text-blue-400 mb-3"></i>
+                        <h4 class="font-bold">PayPal</h4>
+                        <p class="text-sm text-gray-600 text-center">Online transactions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Customer Favorites</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Bikes loved by our community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Favorite 1 -->
+                <div class="bg-gray-50 rounded-xl p-6 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/3 mb-4 md:mb-0">
+                        <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Urban Explorer" 
+                             class="rounded-lg w-full h-48 object-cover">
+                    </div>
+                    <div class="md:w-2/3 md:pl-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Urban Explorer</h3>
+                            <div class="flex items-center bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-crown mr-1"></i> Top Pick
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <div class="flex mr-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-600">128 reviews</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">The perfect blend of comfort and performance for city commuting. Lightweight frame with premium components.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-gray-800">$549</span>
+                            <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full btn-hover">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Favorite 2 -->
+                <div class="bg-gray-50 rounded-xl p-6 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/3 mb-4 md:mb-0">
+                        <img src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="City Commuter" 
+                             class="rounded-lg w-full h-48 object-cover">
+                    </div>
+                    <div class="md:w-2/3 md:pl-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">City Commuter</h3>
+                            <div class="flex items-center bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-leaf mr-1"></i> Eco Choice
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <div class="flex mr-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-600">96 reviews</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Our most popular urban bike with a smooth ride and low maintenance design. Perfect for daily commutes.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-gray-800">$399</span>
+                            <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full btn-hover">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Frequently Asked Questions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Find answers to common questions</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="w-full flex justify-between items-center p-6 focus:outline-none">
+                            <h3 class="text-lg font-medium text-gray-800">How do I rent a bike?</h3>
+                            <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 hidden">
+                            <p class="text-gray-600">Renting a bike is easy! You can book online through our website or mobile app, or visit one of our rental stations. You'll need a valid ID and payment method. After selecting your bike and rental duration, you'll receive a confirmation with pickup instructions.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="w-full flex justify-between items-center p-6 focus:outline-none">
+                            <h3 class="text-lg font-medium text-gray-800">What are your operating hours?</h3>
+                            <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 hidden">
+                            <p class="text-gray-600">Our rental stations are typically open from 7:00 AM to 10:00 PM daily. Some locations may have extended hours during peak seasons. Bike returns can be made 24/7 at any of our automated stations.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="w-full flex justify-between items-center p-6 focus:outline-none">
+                            <h3 class="text-lg font-medium text-gray-800">What payment methods do you accept?</h3>
+                            <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 hidden">
+                            <p class="text-gray-600">We accept all major credit cards (Visa, Mastercard, American Express), Apple Pay, Google Pay, and PayPal for online transactions. At our physical locations, we also accept cash payments.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="w-full flex justify-between items-center p-6 focus:outline-none">
+                            <h3 class="text-lg font-medium text-gray-800">What happens if I return the bike late?</h3>
+                            <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 hidden">
+                            <p class="text-gray-600">Late returns will incur additional charges. For hourly rentals, you'll be charged for an extra hour if you're up to 30 minutes late, and a full day rate if more than 30 minutes late. For daily rentals, each additional hour is charged at 20% of the daily rate.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="w-full flex justify-between items-center p-6 focus:outline-none">
+                            <h3 class="text-lg font-medium text-gray-800">Do you offer discounts for long-term rentals?</h3>
+                            <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                        </button>
+                        <div class="px-6 pb-6 hidden">
+                            <p class="text-gray-600">Yes! We offer special rates for weekly and monthly rentals. Weekly rentals save you 15% compared to daily rates, and monthly rentals save 30%. Contact our customer service for custom long-term rental arrangements.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600 mb-4">Still have questions?</p>
+                    <a href="#" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full btn-hover">
+                        <i class="fas fa-headset mr-2"></i> Contact Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-500 to-green-500 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-4">Download Our App</h2>
+                    <p class="text-xl mb-6">Get the best experience with our mobile app. Find bikes near you, unlock rentals, track your rides, and earn rewards!</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="bg-black hover:bg-gray-900 px-6 py-3 rounded-lg flex items-center btn-hover">
+                            <i class="fab fa-apple text-2xl mr-3"></i>
+                            <div>
+                                <div class="text-xs">Download on the</div>
+                                <div class="font-bold">App Store</div>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-black hover:bg-gray-900 px-6 py-3 rounded-lg flex items-center btn-hover">
+                            <i class="fab fa-google-play text-2xl mr-3"></i>
+                            <div>
+                                <div class="text-xs">Get it on</div>
+                                <div class="font-bold">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://cdn.pixabay.com/photo/2017/01/22/12/07/imac-1999636_1280.png" 
+                         alt="Mobile App" 
+                         class="max-w-xs md:max-w-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-bicycle text-3xl text-green-500"></i>
+                        <span class="text-xl font-bold">EcoRide</span>
+                    </a>
+                    <p class="text-gray-400 mb-4">Making urban mobility sustainable, one ride at a time.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Bike Rentals</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Bike Sales</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Locations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-400">123 Green Street, Eco City</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-green-500 mr-3"></i>
+                            <span class="text-gray-400">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-green-500 mr-3"></i>
+                            <span class="text-gray-400">info@ecoride.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 EcoRide. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        document.getElementById('englishBtn').addEventListener('click', function() {
+            document.body.classList.remove('rtl');
+            // In a real implementation, you would load English content here
+        });
+        
+        document.getElementById('arabicBtn').addEventListener('click', function() {
+            document.body.classList.add('rtl');
+            // In a real implementation, you would load Arabic content here
+        });
+        
+        // FAQ Accordion
+        const faqButtons = document.querySelectorAll('.bg-white button');
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                // Toggle content visibility
+                content.classList.toggle('hidden');
+                
+                // Rotate icon
+                if (content.classList.contains('hidden')) {
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
